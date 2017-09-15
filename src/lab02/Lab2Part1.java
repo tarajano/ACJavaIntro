@@ -37,10 +37,7 @@ public class Lab2Part1 {
 		hours = (seconds % ( secsPerHour * hoursPerDay)) / secsPerHour;
 		minutes = (seconds % secsPerHour) / minsPerHour;
 		seconds = (seconds % secsPerHour) % minsPerHour;
-		System.out.printf("days: %d, %02d::%02d::%02d\n", days, hours, minutes, seconds);
-		
-		
-		
+		System.out.printf("days: %d, %02d::%02d::%02d\n", days, hours, minutes, seconds);	
 	}
 
 }
