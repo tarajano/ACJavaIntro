@@ -24,7 +24,7 @@ public class Lab2Part1 {
 		System.out.println("  In seconds -> " + seconds);
 		hours = seconds / secsPerHour;
 		minutes = (seconds % secsPerHour) / minsPerHour;
-		seconds = (seconds % secsPerHour) % secsPerMins;
+		seconds = seconds % secsPerMins;
 		System.out.printf("Back to hours -> %02d::%02d::%02d\n", hours, minutes, seconds);
 		
 		// Scanning input from STDIN
@@ -36,7 +36,8 @@ public class Lab2Part1 {
 		days = seconds / (secsPerHour * hoursPerDay);
 		hours = (seconds % ( secsPerHour * hoursPerDay)) / secsPerHour;
 		minutes = (seconds % secsPerHour) / minsPerHour;
-		seconds = (seconds % secsPerHour) % minsPerHour;
+		//seconds = (seconds % secsPerHour) % minsPerHour;
+		seconds = seconds % secsPerMins;
 		System.out.printf("days: %d, %02d::%02d::%02d\n", days, hours, minutes, seconds);	
 	}
 
