@@ -1,7 +1,7 @@
 /*
  * Author: Manuel Alonso (tarajano@gmail.com) Sep 14, 2017
 */
-package hybrid01;
+
 
 public class Hybrid1 {
 
