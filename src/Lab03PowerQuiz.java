@@ -8,7 +8,7 @@ import java.util.Scanner;
  * @author Manuel Alonso Tarajano (tarajano@gmail.com)
  * Nov 21, 2017  
  */
-public class Lab02PowQuiz {
+public class Lab03PowerQuiz {
 
 	public static boolean isAnswerOK = true;
 	public static int baseNumber = 2;
@@ -83,7 +83,8 @@ public class Lab02PowQuiz {
 				System.out.print("  Ups! Remember it must positive.");
 			
 		} while(userAnswer < 0);
-		    
+		
+		intScanner.close();
 		return userAnswer;
 	}
 	
