@@ -15,16 +15,18 @@ public class Lab03PowerQuiz {
 	public static int exponentNumber, powerNumber, userAnswerNumber;
 	public static int userOKAnswers = 0;
 	public static long timeStart, timeEnd;
-
+	public static long quizDurationMillisecs = 10000;
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		 
 		long timeStart = System.currentTimeMillis();
+		boolean userHasTime = true;
 		
 		do{
-			int exponentNumber = getRandomIntInRange(0,12);
+			int exponentNumber = getRandomIntInRange(0,1);
 			int powerNumber = (int) Math.pow(baseNumber, exponentNumber);
 			
 			printQuiz(baseNumber, exponentNumber);
@@ -35,15 +37,29 @@ public class Lab03PowerQuiz {
 			if(isAnswerOK)
 				userOKAnswers += 1;
 			
-		}while(isAnswerOK);
+			// Check time consumed
+			userHasTime = (System.currentTimeMillis() - timeStart) < quizDurationMillisecs;
+			
+		}while(isAnswerOK && userHasTime);
 		
 		long timeEnd = System.currentTimeMillis();
 		
+		System.out.println("");
+		
+		printMessageToUser(userHasTime);
 		printUserScore(userOKAnswers);
 		printUserComsumedTime(timeStart, timeEnd);
 
 	}
 
+	public static void printMessageToUser(boolean userHasTime) {
+		if (userHasTime) {
+			System.out.printf("Sorry, wrong answer.\n");
+		} else {
+			System.out.printf("That's it! Wow! You answered all correctly.\n");
+		}
+	}
+	
 	public static void printUserComsumedTime(long start, long end) {
 		int timeSecs = (int) Math.round( (end - start) / 1000);
 		System.out.printf("Time: %d seconds.\n", timeSecs);
@@ -84,7 +100,7 @@ public class Lab03PowerQuiz {
 			
 		} while(userAnswer < 0);
 		
-		intScanner.close();
+		//intScanner.close();
 		return userAnswer;
 	}
 	
