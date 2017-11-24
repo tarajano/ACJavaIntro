@@ -1,6 +1,5 @@
-/**
- * 
- */
+
+import javax.swing.JOptionPane;
 
 /**
  * @author Manuel Alonso Tarajano (tarajano@gmail.com)
@@ -11,63 +10,72 @@ public class Lab03Benchmark {
 	
 	public static void main(String[] args) {
 		
+		// Call JOptionPane for Input Data of base and exponent
+		boolean likesApple = JOptionPane.showConfirmDialog(null, "This program will do some exponentiations." +
+																 "\n Are OK with that?",
+							  "User Agreement", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+		
+		if(!likesApple) {
+			System.out.printf("User agreement declined.\nBye bye.");
+			System.exit(0);
+		}
+		
+		double base = Double.parseDouble(JOptionPane.showInputDialog("Base", 0.0));
+		double exponent = Double.parseDouble(JOptionPane.showInputDialog("Exponent", 0.0));
+		
 		// Control empty loop
 		timedEmptyLoop();
-		
-		// Math.pow(x,y) loop
-		timedMathPowLoop(3);
 		
 		// cube(x) loop
-		timedCubeLoop(3);
-
-		// Math.pow(x,y) loop
-		timedMathPowLoop(2);
-		
+		timedCubeLoop(base);
 		// square(x) loop
-		timedSquareLoop(2);
+		timedSquareLoop(base);
 		
-		// Control empty loop
-		timedEmptyLoop();
+		// Math.pow(x,y) loop
+		timedMathPowLoop(base, exponent);
+		
+		// Math.pow(x,y) loop
+		timedMathPowLoop(base, exponent);
+
 	}
 	
 	public static void timedEmptyLoop() {
 		int calls = 0;
 		long timeStart = System.currentTimeMillis();
 		while ( System.currentTimeMillis() < timeStart + loopDurationMillisecs){
-			calls += 1;
-			calls = Math.abs(calls); // Nothing interesting here.
+			calls++;
 		}
-		System.out.printf("Calls to empty loop: %d\n", calls);
+		System.out.printf("%d calls to empty loop\n", calls);
 	}
 	
-	public static void timedMathPowLoop(double var) {
+	public static void timedMathPowLoop(double base, double exponent) {
 		int calls = 0;
 		long timeStart = System.currentTimeMillis();
 		while ( System.currentTimeMillis() < timeStart + loopDurationMillisecs){
-			double res = Math.pow(var, var);
+			double res = Math.pow(base, exponent);
 			calls += 1;
 		}
-		System.out.printf("Calls to Math.pow(%.2f,%.2f): %d\n", var, var, calls);
+		System.out.printf("%d calls to Math.pow(%.2f,%.2f)\n", calls, base, exponent);
 	}
 	
-	public static void timedCubeLoop(double var) {
+	public static void timedCubeLoop(double base) {
 		int calls = 0;
 		long timeStart = System.currentTimeMillis();
 		while ( System.currentTimeMillis() < timeStart + loopDurationMillisecs){
-			double result = cube(var);
+			double result = cube(base);
 			calls += 1;
 		}
-		System.out.printf("Calls to cube(%.2f):     %d\n", var, calls);
+		System.out.printf("%d calls to cube(%.2f)\n", calls, base);
 	}
 	
-	public static void timedSquareLoop(double var) {
+	public static void timedSquareLoop(double base) {
 		int calls = 0;
 		long timeStart = System.currentTimeMillis();
 		while ( System.currentTimeMillis() < timeStart + loopDurationMillisecs){
-			double result = square(var);
+			double result = square(base);
 			calls += 1;
 		}
-		System.out.printf("Calls to square(%.2f):   %d\n", var, calls);
+		System.out.printf("%d calls to square(%.2f)\n", calls, base);
 	}
 	
 	public static double cube(double n) {
