@@ -15,7 +15,7 @@ public class Lab03PowerQuiz {
 	public static int exponentNumber, powerNumber, userAnswerNumber;
 	public static int userOKAnswers = 0;
 	public static long timeStart, timeEnd;
-	public static long quizDurationMillisecs = 10000;
+	public static long quizDurationMillisecs = 20000;
 	
 	/**
 	 * @param args
