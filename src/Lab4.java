@@ -17,12 +17,14 @@ public class Lab4 {
 	// Function that verifies if the given string is sorted (unicode char-wise).
 	public static boolean isSorted(String text) {
 		int index = 0;
-		while (index < text.length()) {
+		while (index < text.length() - 1) {		// 1) Found that index was not incremented (noticed from code behaviour, not debuger)
+												// 2) Out of index StringIndexOutOfBoundsException
 			char current = text.charAt(index);
-			char next = text.charAt(index + 1);   // <- BUG HERE. out of index
+			char next = text.charAt(index + 1);    
 			if (current > next) {
 				return false;
 			}
+			index++;
 		}
 		return true;
 	}
@@ -37,7 +39,7 @@ public class Lab4 {
 
 	public static void main(String[] args) {
 		// Verify if a known sorted String is sorted
-		test("abcdefg");
+		test("abc");
 
 		// Ask the user for letters
 		System.out.println("Give me a sequence of character to verify:");
