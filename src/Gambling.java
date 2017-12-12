@@ -32,7 +32,7 @@ public class Gambling {
 				betBalance = getBetBalanceFromUserInput(userInput, balance);			
 			} while (!validateBetBalance(betBalance));
 
-			if (!validateRound())
+			if (!validateCurrentRound())
 				break;
 			
 			// Rolling the dices
@@ -42,35 +42,34 @@ public class Gambling {
 			addToBalance = computeAmountAddBalance(betBalance);
 			balance = balance + addToBalance;
 		
-		} while (true) ;
+		} while (validateNextRound()) ;
 		
 	}
 
 	// helper methods
-	private static boolean validateRound(){
+	private static boolean validateCurrentRound(){
 		if (betBalance == 0) {
 			System.out.printf("Your final balance is $%.2f\n", balance);
 			System.out.println("Sorry to see you go.");
 			return false;
-		} else if (balance < 1) {
-			System.out.printf("You have only $%.2f left.", balance);
+		}
+		return true;
+	}
+	
+	private static boolean validateNextRound(){
+		if (balance <= 0) { 
+			System.out.printf("You have $%.2f left.\n", balance);
 			System.out.println("Sorry. Not enough money to gamble.");
 			return false;
 		}
 		return true;
-	}	
+	}
 	
 	private static boolean validateBetBalance(double betBalance){
 		if (betBalance >= 0 && betBalance <= balance){
 			System.out.printf("  You are going to gamble $%.2f in this round.\n", betBalance);
 			return true;
 		}
-		return false;
-	}	
-	
-	private static boolean checkEnoughBalance(){
-		if (balance > 0)
-			return true;
 		return false;
 	}
 	
@@ -91,6 +90,7 @@ public class Gambling {
 		}
 		
 		System.out.printf("  You made %.2f in this round.\n", addToBalance);
+		
 		return addToBalance;
 	}
 	
