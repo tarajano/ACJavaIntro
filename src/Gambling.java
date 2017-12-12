@@ -1,5 +1,6 @@
 
 import java.util.Scanner;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * @author Manuel Alonso Tarajano (tarajano@gmail.com)
@@ -7,45 +8,65 @@ import java.util.Scanner;
  */
 public class Gambling {
 	
-	private static int TRIPLE_DICE_WORTH = 3;
-	private static int DOUBLE_DICE_WORTH = 2;
+	private static int TRIPLET_DICE_WORTH = 3;
+	private static int DUPLE_DICE_WORTH = 2;
+	private static int REIMBURSE_DICE_WORTH = 10;
 	
 	private static double balance = 100;
 	private static double addToBalance;
-	private static double balanceBet = 10;
+	private static double betBalance;
 	private static int dice1;
 	private static int dice2;
 	private static int dice3;
-	
-	
+	private static boolean validRound;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String balanceInput = "";
 		
-		// Get user input 
-		
-		// Validate bet balance 
-		validateBetBalance(balanceInput);
-		
-		// Rolling the dices
-		rollDices();
-		
-		// Computing results of dice roll
-		addToBalance = computeBetResult(balanceBet);
-		balance = balance + addToBalance;
-		
-		// Check balance
-		if (checkEnoughBalance()){
-			// print and stay
-		} else {
-			// print and leave
-		}
-		
+		do {
+			
+			do {
+				// Get user input 
+				String userInput = getUserInput();
+				// Parse input 
+				betBalance = getBetBalanceFromUserInput(userInput, balance);			
+			} while (!validateBetBalance(betBalance));
 
+			if (!validateRound())
+				break;
+			
+			// Rolling the dices
+			rollDices();
+
+			// Computing results of dice roll
+			addToBalance = computeAmountAddBalance(betBalance);
+			balance = balance + addToBalance;
+		
+		} while (true) ;
+		
 	}
 
 	// helper methods
+	private static boolean validateRound(){
+		if (betBalance == 0) {
+			System.out.printf("Your final balance is $%.2f\n", balance);
+			System.out.println("Sorry to see you go.");
+			return false;
+		} else if (balance < 1) {
+			System.out.printf("You have only $%.2f left.", balance);
+			System.out.println("Sorry. Not enough money to gamble.");
+			return false;
+		}
+		return true;
+	}	
+	
+	private static boolean validateBetBalance(double betBalance){
+		if (betBalance >= 0 && betBalance <= balance){
+			System.out.printf("  You are going to gamble $%.2f in this round.\n", betBalance);
+			return true;
+		}
+		return false;
+	}	
 	
 	private static boolean checkEnoughBalance(){
 		if (balance > 0)
@@ -53,54 +74,78 @@ public class Gambling {
 		return false;
 	}
 	
-	private static double computeBetResult(double betBal){
+	private static double computeAmountAddBalance(double betBal){
 		double addToBalance;
 		
-		if(dice1 == dice2 && dice2 == dice3){
-			addToBalance = betBal * TRIPLE_DICE_WORTH;
+		if(dice1 == dice2 && dice2 == dice3){ 
+			// Checking for triplet
+			addToBalance = betBal * TRIPLET_DICE_WORTH;
 		} else if (dice1 == dice2 || dice2 == dice3 || dice1 == dice3){
-			addToBalance = betBal * DOUBLE_DICE_WORTH;
-		} else if ( (dice1 + dice2 + dice3) > 10 ){
+			// Checking for duple
+			addToBalance = betBal * DUPLE_DICE_WORTH;
+		} else if ( (dice1 + dice2 + dice3) > REIMBURSE_DICE_WORTH ){
+			// Checking for reimbursement
 			addToBalance = 0;
 		} else {
 			addToBalance = betBal * -1;
 		}
 		
+		System.out.printf("  You made %.2f in this round.\n", addToBalance);
 		return addToBalance;
 	}
 	
 	private static void rollDices(){
 		int min = 1;
 		int max = 6;
-		dice1 = getRandomInt(1, 6);
-		dice2 = getRandomInt(1, 6);
-		dice3 = getRandomInt(1, 6);
+		dice1 = getRandomInt(min, max);
+		dice2 = getRandomInt(min, max);
+		dice3 = getRandomInt(min, max);
+		System.out.printf("  Dices: %d %d %d\n", dice1, dice2, dice3);
 	}
 	
-	private static String getUserInput(){
-		return "";
+	private static String getUserInput() {
+		String userInput; 
+		Scanner scanner = new Scanner(System.in);
+		do {
+			System.out.printf("Your balance is: $%.2f\n", balance);
+			System.out.print("How much you want to bet? $: ");
+			userInput = scanner.next();
+		} while (!validateInput(userInput) ) ;
+		return userInput;
 	}
 	
-	private static double validateBetBalance(String balanceInput) {
-		double balBet;
+	private static boolean validateInput(String userInput) {
+		boolean validInput = false;
 		
-		if(balanceInput.equals("?")) {
-			// get random balanceBet within balance range
-			return getRandomInt(1, (int) Math.floor(balance));
-		} else if (balanceInput.equals("~")) {
-			// cheat balance and set balanceBet to 1.00
-			cheatBalance();
-			return 1.00;
-		} else {
-			// cast balanceBet string to double
-			balBet = Double.parseDouble(balanceInput);
-			
-			// validate balanceBet within range 
+		if(userInput.equals("?") || userInput.equals("~")) {
+			validInput = true;
+		} else if (NumberUtils.isCreatable(userInput)) {
+			validInput = true;
 		}
 		
-		return isValid;
+		return validInput;
+	}
+	
+	private static double getBetBalanceFromUserInput(String userInput, double balance) {
+		double betBalance = -1;
+		
+		if(userInput.equals("?")) {
+			// gets random betBalance
+			 betBalance = getRandomDouble(1, balance);
+		} else if (userInput.equals("~")) {
+			// cheats the balance
+			cheatBalance();
+		} else if (NumberUtils.isCreatable(userInput)) {
+			betBalance = Double.parseDouble(userInput); 
+		}
+		
+		return betBalance;
 	}
 
+	private static double getRandomDouble(double min, double max){
+		return min + (Math.random() * ((max - min) + 1));
+	}
+	
 	private static int getRandomInt(int min, int max){
 		return min + (int) (Math.random() * ((max - min) + 1));
 	}
@@ -109,9 +154,6 @@ public class Gambling {
 		// secretly cheats balance
 		int balanceTopUp = 100;
 		balance = balance + balanceTopUp;
-		balanceBet = 1;
 	}
-	
-	
 
 }

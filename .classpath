@@ -3,5 +3,9 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="/Users/tarajano/eclipse-workspace/jars/jsoup-1.10.3.jar"/>
+	<classpathentry kind="lib" path="/Users/tarajano/eclipse-workspace/jars/commons-math3-3.6.1/commons-math3-3.6.1.jar"/>
+	<classpathentry kind="lib" path="/Users/tarajano/eclipse-workspace/jars/commons-math3-3.6.1/commons-math3-3.6.1-tools.jar"/>
+	<classpathentry kind="lib" path="/Users/tarajano/eclipse-workspace/jars/commons-lang3-3.7/commons-lang3-3.7.jar"/>
+	<classpathentry kind="lib" path="/Users/tarajano/eclipse-workspace/jars/commons-lang3-3.7/commons-lang3-3.7-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
