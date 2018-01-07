@@ -16,17 +16,24 @@ public class PrimeNumbers {
 		primes = new int[nop];
 	}
 	
+	public void printPrimes(){
+		for(int idx = 1; idx < numberOfPrimes; idx++){
+			System.out.println(primes[idx]);
+		}
+	}
+	
 	public void generatePrimes(){
 		primes[0] = 2;
 		
-		for(int nextPrimeIndex = 1; nextPrimeIndex < numberOfPrimes; nextPrimeIndex++){
-			int lastPrime = primes[nextPrimeIndex - 1];
-			int testNumber = lastPrime + 1;
+		for(int nextPrimeIdx = 1; nextPrimeIdx < numberOfPrimes; nextPrimeIdx++){
 			
-			while(!isPrime(testNumber)){
-				testNumber++;
+			int previousPrime = primes[nextPrimeIdx - 1];
+			int currentNumber = previousPrime + 1;
+			
+			while(!isPrime(currentNumber)){
+				currentNumber++;
 			}
-			primes[nextPrimeIndex] = testNumber;
+			primes[nextPrimeIdx] = currentNumber;
 		}
 
 	}
@@ -39,7 +46,15 @@ public class PrimeNumbers {
 				return false;
 			idx++;
 		}
+		
 		return true;
+	}
+	
+	
+	public static void main (String [] args){
+		PrimeNumbers pn = new PrimeNumbers(10);
+		pn.generatePrimes();
+		pn.printPrimes();
 	}
 	
 
