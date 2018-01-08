@@ -17,8 +17,11 @@ public class PrimeNumbers {
 	}
 	
 	public void printPrimes(){
-		for(int idx = 1; idx < numberOfPrimes; idx++){
-			System.out.println(primes[idx]);
+		String separator;
+		
+		for(int idx = 0; idx < numberOfPrimes; idx++){
+			separator = idx < 9 ? ":  " : ": ";
+			System.out.println( (idx + 1) + separator + primes[idx]);
 		}
 	}
 	
@@ -31,6 +34,7 @@ public class PrimeNumbers {
 			int currentNumber = previousPrime + 1;
 			
 			while(!isPrime(currentNumber)){
+
 				currentNumber++;
 			}
 			primes[nextPrimeIdx] = currentNumber;
@@ -52,7 +56,9 @@ public class PrimeNumbers {
 	
 	
 	public static void main (String [] args){
-		PrimeNumbers pn = new PrimeNumbers(10);
+		System.out.println("Program developed by Manuel Alonso");
+		System.out.println("");
+		PrimeNumbers pn = new PrimeNumbers(50);
 		pn.generatePrimes();
 		pn.printPrimes();
 	}
