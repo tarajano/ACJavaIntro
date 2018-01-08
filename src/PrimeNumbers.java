@@ -1,6 +1,6 @@
 import java.util.Scanner;
-
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.math3.primes.Primes;
 
 /**
  * 
@@ -43,8 +43,13 @@ public class PrimeNumbers {
 	}
 	
 	private boolean isPrime(int n){
-		int idx = 0;
 		
+		// Call math3::Primes if input number is long
+		if(n > 10000)
+			return Primes.isPrime(n);
+		
+		// Dividing by all previous primes
+		int idx = 0;
 		while(idx < numberOfPrimes && primes[idx] != 0){
 			if(n % primes[idx] == 0)
 				return false;
@@ -90,14 +95,17 @@ public class PrimeNumbers {
 		System.out.println("Program developed by Manuel Alonso");
 
 		// Get user input
-		do {
-			String userInput = getUserInput();
-			// Parse input 
-			numberOfPrimes = getIntFromUserInput(userInput);			
-		} while (!validateNumberOfPrimes(numberOfPrimes));
+//		do {
+//			String userInput = getUserInput();
+//			// Parse input 
+//			numberOfPrimes = getIntFromUserInput(userInput);			
+//		} while (!validateNumberOfPrimes(numberOfPrimes));
 		
+		numberOfPrimes = 15000;
 		PrimeNumbers pn = new PrimeNumbers(numberOfPrimes);
+		
 		pn.generatePrimes();
+		
 		pn.printPrimes();
 	}
 	
