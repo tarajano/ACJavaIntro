@@ -21,7 +21,6 @@ public class Gambling {
 	private static boolean validRound;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		do {
 			
