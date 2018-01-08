@@ -95,18 +95,22 @@ public class PrimeNumbers {
 		System.out.println("Program developed by Manuel Alonso");
 
 		// Get user input
-//		do {
-//			String userInput = getUserInput();
-//			// Parse input 
-//			numberOfPrimes = getIntFromUserInput(userInput);			
-//		} while (!validateNumberOfPrimes(numberOfPrimes));
-		
-		numberOfPrimes = 15000;
+		do {
+			String userInput = getUserInput();
+			// Parse input 
+			numberOfPrimes = getIntFromUserInput(userInput);			
+		} while (!validateNumberOfPrimes(numberOfPrimes));
+
+//		numberOfPrimes = 15000;
 		PrimeNumbers pn = new PrimeNumbers(numberOfPrimes);
 		
+		long timeStart = System.currentTimeMillis();
 		pn.generatePrimes();
+		long timeEnd = System.currentTimeMillis();
+		long timeRan = (timeEnd - timeStart);   
 		
 		pn.printPrimes();
+		System.out.println("Ran for: " + timeRan + " msecs.");
 	}
 	
 
